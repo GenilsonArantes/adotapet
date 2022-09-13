@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:projeto/pages/checagem_page.dart';
+import 'package:projeto/controle/checagem_page.dart';
 import 'package:projeto/pages/createanuncio.dart';
 import 'package:projeto/pages/favoritos.dart';
 import 'package:projeto/pages/meusPets.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto/pages/checagem_page.dart';
+import 'package:projeto/controle/checagem_page.dart';
 
 class Splash extends StatefulWidget {
   @override

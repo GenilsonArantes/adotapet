@@ -1,7 +1,10 @@
+import 'dart:html';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:projeto/pages/checagem_page.dart';
+import 'package:projeto/controle/checagem_page.dart';
 import 'package:projeto/pages/login.page.dart';
 
 
@@ -237,7 +240,7 @@ class _SignupPageState extends State<SignupPage> {
   final _tecSenha = TextEditingController(); //_tecTelefone
   final _tecTelefone = TextEditingController(); //
   final _firebaseAuth = FirebaseAuth.instance;
-
+  final db = FirebaseFirestore.instance;
 
   cadastrar() async {
     try {
@@ -270,5 +273,6 @@ class _SignupPageState extends State<SignupPage> {
         );
       }
     }
+
   }
 }
