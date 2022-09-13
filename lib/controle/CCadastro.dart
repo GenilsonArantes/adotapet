@@ -1,5 +1,5 @@
-import 'package:projeto/modelo/bd/bd_core.dart';
-import 'package:projeto/modelo/beans/cadastro.dart';
+import 'package:projeto/database/modelo/bd/bd_core.dart';
+import 'package:projeto/database/modelo/beans/cadastro.dart';
 
 class CCadastro{
 
