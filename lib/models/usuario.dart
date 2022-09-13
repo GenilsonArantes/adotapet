@@ -1,4 +1,4 @@
-class Cadastro{
+class Usuario{
   //necessário este interrogação para inserir valor nulo
   late String id;
   late String nome;
@@ -9,9 +9,9 @@ class Cadastro{
 
 
   // criando um construtor
-  Cadastro(this.id, this.nome, this.cpf,this.email,this.telefone,this.senha);
+  Usuario(this.id, this.nome, this.cpf,this.email,this.telefone,this.senha);
 
-  Cadastro.map(dynamic obj) {
+  Usuario.map(dynamic obj) {
     this.id = obj['id'];
     this.nome = obj['nome'];
     this.cpf = obj['cpf'];
@@ -35,7 +35,7 @@ class Cadastro{
     return mapa;
   }
 
-  Cadastro.fromMap(Map<String, dynamic> mapa) {
+  Usuario.fromMap(Map<String, dynamic> mapa) {
     this.id = mapa['id'];
     this.nome = mapa['nome'];
     this.cpf = mapa['cpf'];
