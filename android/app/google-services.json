@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "351580792912",
+    "project_id": "tcc-genilson",
+    "storage_bucket": "tcc-genilson.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351580792912:android:82685652c2e0f9e016c955",
+        "android_client_info": {
+          "package_name": "com.example.projeto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "351580792912-tpv55klfefr5adttrr9s61mpnrgmdama.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjkTi_RmqmkvBtFoD5CwKtWBgqY4esKr4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "351580792912-tpv55klfefr5adttrr9s61mpnrgmdama.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
