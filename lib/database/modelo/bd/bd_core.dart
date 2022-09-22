@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:projeto/modelo/bd/bd_configs.dart';
+import 'bd_configs.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
