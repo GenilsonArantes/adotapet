@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:projeto/controle/checagem_page.dart';
+import 'package:projeto/configuracoes/accoutConfigs.dart';
 import 'package:projeto/pages/createanuncio.dart';
 import 'package:projeto/pages/favoritos.dart';
 import 'package:projeto/pages/meusPets.dart';
@@ -29,7 +30,6 @@ class _HomePageState extends State<HomePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-
       drawer: new Drawer(
         width: 280,
         backgroundColor: Colors.white,
@@ -53,7 +53,9 @@ class _HomePageState extends State<HomePage> {
 
             ListTile(
                 title: new Text("Pets-Favoritos"),
+                iconColor: Colors.pink,
                 trailing: Icon(Icons.star_border),
+
                 onTap: () {
                   Navigator.push(
                     context,
@@ -62,6 +64,7 @@ class _HomePageState extends State<HomePage> {
                 }),
             ListTile(
                 trailing: Icon(Icons.add),
+                iconColor: Colors.pink,
                 title: new Text("Adicionar Pet"),
                 onTap: () {
                   Navigator.push(
@@ -73,6 +76,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
                 title: new Text("Meus Pets"),
                 trailing: Icon(Icons.pets_outlined),
+                iconColor: Colors.pink,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -81,12 +85,20 @@ class _HomePageState extends State<HomePage> {
                 }),
             ListTile(
               title: new Text("Configurações Conta"),
+              subtitle: new Text("asd"),
+              iconColor: Colors.pink,
               trailing: Icon(Icons.settings),
-              onTap: () => BorderRadius.circular(1),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => accoutConfigs()),
+                );
+              },
             ),
             ListTile(
                 title: new Text("Relatórios"),
                 trailing: Icon(Icons.pets_outlined),
+                iconColor: Colors.pink,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -96,6 +108,7 @@ class _HomePageState extends State<HomePage> {
             ListTile(
                 title: new Text("Pagina Teste"),
                 trailing: Icon(Icons.pan_tool),
+                iconColor: Colors.pink,
                 onTap: () {
                   Navigator.push(
                     context,
@@ -105,16 +118,18 @@ class _HomePageState extends State<HomePage> {
             ListTile(
                 title: new Text("LastPage"),
                 trailing: Icon(Icons.add_a_photo_outlined),
+                iconColor: Colors.pink,
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => LastPage2()),
+                    MaterialPageRoute(builder: (context) => NotesPage()),
                   );
                 }),
             ListTile(
               dense: true,
               title: Text('Sair'),
               trailing: Icon(Icons.exit_to_app),
+              iconColor: Colors.pink,
               onTap: () {
                 sair();
               },
@@ -126,7 +141,6 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Colors.deepPurpleAccent,
         title: Center(
           child: SizedBox(
-            width: 90,
             child: Text('Adota-Pet'),
           ),
         ),
@@ -186,12 +200,13 @@ class _HomePageState extends State<HomePage> {
 
   sair() async {
     await _firebaseAuth.signOut().then(
-          (user) => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ChecagemPage(),
-        ),
-      ),
+          (user) =>
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChecagemPage(),
+            ),
+          ),
     );
   }
 }

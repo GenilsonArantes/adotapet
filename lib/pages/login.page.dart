@@ -46,18 +46,22 @@ class _LoginPageState extends State<LoginPage> {
             ),
             TextFormField(
               // autofocus: true,
+              cursorColor: Colors.pink,
+
               controller: _tecEmail,
               keyboardType: TextInputType.emailAddress,
+
               decoration: InputDecoration(
+
                 labelText: "E-mail",
                 labelStyle: TextStyle(
-                  color: Colors.black38,
+                  color: Colors.white,
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
               ),
 
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20,color: Colors.white),
             ),
             SizedBox(
               height: 10,
@@ -67,15 +71,16 @@ class _LoginPageState extends State<LoginPage> {
               keyboardType: TextInputType.text,
               obscureText: true,
               controller: _tecSenha,
+              cursorColor: Colors.pink,
               decoration: InputDecoration(
                 labelText: "Senha",
                 labelStyle: TextStyle(
-                  color: Colors.black38,
+                  color: Colors.white,
                   fontWeight: FontWeight.w400,
                   fontSize: 20,
                 ),
               ),
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 20,color: Colors.white),
             ),
             SizedBox(
               height: 35,
@@ -184,11 +189,14 @@ class _LoginPageState extends State<LoginPage> {
               height: 30,
             ),
             Container(
+
               height: 40,
               alignment: Alignment.centerRight,
               child: FlatButton(
+                color: Colors.blue,
                 child: Text(
-                  "Recuperar Senha",
+                  "Esqueceu a senha?",
+                  style: TextStyle(color: Colors.white),
                   textAlign: TextAlign.right,
                 ),
                 onPressed: () {

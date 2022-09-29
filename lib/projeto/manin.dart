@@ -2,30 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'sql_helper.dart';
 
-class LastPage2 extends StatelessWidget {
-  const LastPage2({Key? key}) : super(key: key);
+class NotesPage extends StatefulWidget {
+  const NotesPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        // Remove the debug banner
-        debugShowCheckedModeBanner: false,
-        title: 'Kindacode.com',
-        theme: ThemeData(
-          primarySwatch: Colors.orange,
-        ),
-        home: const HomePage());
-  }
+  _NotesPageState createState() => _NotesPageState();
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class _NotesPageState extends State<NotesPage> {
   // All journals
   List<Map<String, dynamic>> _journals = [];
 
@@ -143,7 +127,8 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Kindacode.com'),
+        title: const Text('Notes'),
+
       ),
       body: _isLoading
           ? const Center(

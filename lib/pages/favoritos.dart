@@ -22,7 +22,6 @@ class _FavoritePetsState extends State<FavoritePets> {
         ),
         title: Center(
           child: SizedBox(
-            width: 130,
             child: Text('Favoritos'),
           ),
         ),

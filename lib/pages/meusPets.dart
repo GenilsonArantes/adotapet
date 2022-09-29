@@ -5,6 +5,7 @@ class MeusPets extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         backgroundColor: Colors.deepPurpleAccent,
         automaticallyImplyLeading: true,
         leading: IconButton(
@@ -14,7 +15,7 @@ class MeusPets extends StatelessWidget {
         ),
         title: Center(
           child: SizedBox(
-            width: 130,
+
             child: Text('Meus Pets'),
           ),
         ),

@@ -1,10 +1,21 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ResetPasswordPage extends StatelessWidget {
+class ResetPasswordPage extends StatefulWidget {
+  const ResetPasswordPage({Key? key}) : super(key: key);
+
+  @override
+  State<ResetPasswordPage> createState() => _ResetPasswordPageState();
+}
+
+class _ResetPasswordPageState extends State<ResetPasswordPage> {
+  final emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: const Text('Mudar senha'),
+        foregroundColor: Colors.white,
         backgroundColor: Colors.deepPurpleAccent,
         automaticallyImplyLeading: true,
         leading: IconButton(
@@ -43,7 +54,7 @@ class ResetPasswordPage extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "Por favor, informe o E-mail e CPF associado a sua conta que mostraremos sua senha.",
+                        "informe o E-mail associado a sua conta e logo após lhe enviaremos um link por email para que voce possa mudar sua senha.",
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w400,
@@ -59,6 +70,7 @@ class ResetPasswordPage extends StatelessWidget {
                     children: <Widget>[
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
+                        controller: emailController,
                         decoration: InputDecoration(
                           labelText: "E-mail",
                           labelStyle: TextStyle(
@@ -67,21 +79,7 @@ class ResetPasswordPage extends StatelessWidget {
                             fontSize: 20,
                           ),
                         ),
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: "CPF",
-                          labelStyle: TextStyle(
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         style: TextStyle(fontSize: 20),
                       ),
                       SizedBox(
@@ -115,7 +113,9 @@ class ResetPasswordPage extends StatelessWidget {
                               ),
                               textAlign: TextAlign.center,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              resetPassword();
+                            },
                           ),
                         ),
                       ),
@@ -131,5 +131,9 @@ class ResetPasswordPage extends StatelessWidget {
         ),
       ),
     );
+  }
+  Future resetPassword() async {
+    await FirebaseAuth.instance
+        .sendPasswordResetEmail(email: emailController.text.trim());
   }
 }

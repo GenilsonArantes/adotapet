@@ -16,7 +16,7 @@ class CreateAnuncioPage extends StatelessWidget {
         ),
         title: Center(
           child: SizedBox(
-            width: 180,
+
             child: Text('Criando Anuncio'),
           ),
         ),

@@ -5,19 +5,12 @@ import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class BdCore {
-
   String _databaseName = Configs.databaseName;
   int _databaseVersion = Configs.databaseVersion;
-
-
   static final tableCadastro = 'cadastro';
-
-
   // torna esta classe singleton
   BdCore._privateConstructor();
   static final BdCore instance = BdCore._privateConstructor();
-
-
   // tem somente uma referência ao banco de dados
   static late Database ?_database;
 
