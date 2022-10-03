@@ -8,17 +8,15 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
-
-
   void initState() {
     super.initState();
     //espera 3 segundos do splash
     Future.delayed(Duration(seconds: 3)).then((_) {
       //muda para a proxima tela
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => ChecagemPage()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => ChecagemPage()));
     });
   }
-
 
   //constroe a tela do splash
   Widget build(BuildContext context) {
@@ -26,12 +24,23 @@ class _SplashState extends State<Splash> {
       color: Colors.deepPurpleAccent,
       alignment: Alignment.center,
       child: Center(
+        child: SizedBox(
+          child: Image.asset("assets/images/iconapp.png"),
+          height: 160,
+          width: 160,
+        ),
+
+      ),
+      /*
+
+      child: Center(
+
         child: Text(
           "Adota-Pet",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold,),
         ),
       ),
-
+*/
     );
   }
 }

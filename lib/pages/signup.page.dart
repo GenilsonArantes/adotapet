@@ -238,6 +238,9 @@ class _SignupPageState extends State<SignupPage> {
   final _tecTelefone = TextEditingController(); //
   final _firebaseAuth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+
+
+  
   cadastrar() async {
     try {
       UserCredential userCredential =

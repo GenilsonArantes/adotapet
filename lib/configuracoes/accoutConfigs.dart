@@ -27,18 +27,6 @@ class _accoutConfigsState extends State<accoutConfigs> {
           onPressed: () => Navigator.pop(context, false),
         ),
       ),
-
-      body: Container(
-        padding: EdgeInsets.only(top: 60, left: 40, right: 40),
-        color: Colors.white,
-        child: Center(
-          child: Container(
-            color: Colors.cyanAccent,
-            height: 1280,
-            width: 720,
-          ),
-        ),
-      ),
     );
   }
 }

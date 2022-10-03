@@ -32,7 +32,7 @@ class _FavoritePetsState extends State<FavoritePets> {
               children: [
                 Column(
                   mainAxisSize: MainAxisSize.min,
-                  children: List.generate(12, (index){return card(index.toString());}),
+                  children: List.generate(3, (index){return card(index.toString());}),
                 ),
               ],
             )
