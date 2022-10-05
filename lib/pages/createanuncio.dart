@@ -1,185 +1,142 @@
+import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:projeto/pages/home.page.dart';
+import 'package:image_picker/image_picker.dart';
 
-class CreateAnuncioPage extends StatelessWidget {
+class CreateAnuncioPage extends StatefulWidget {
+  const CreateAnuncioPage({Key? key}) : super(key: key);
+
+  @override
+  State<CreateAnuncioPage> createState() => _CreateAnuncioPageState();
+}
+
+class _CreateAnuncioPageState extends State<CreateAnuncioPage> {
+  final FirebaseStorage storage = FirebaseStorage.instance;
+  bool uploading = false;
+  double total = 0;
+  List<Reference> refs = [];
+  List<String> arquivos = [];
+  bool loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    loadImages();
+  }
+
+  loadImages() async {
+    refs = (await storage.ref('images').listAll()).items;
+    for (var ref in refs) {
+      arquivos.add(await ref.getDownloadURL());
+    }
+    setState(() {
+      loading = false;
+    });
+  }
+
+  Future<XFile?> getImage() async {
+    final ImagePicker _picker = ImagePicker();
+    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    return image;
+  }
+
+  Future<UploadTask> upload(String path) async {
+    File file = File(path);
+    try {
+      String ref = 'images/img-${DateTime.now().toString()}.jpg';
+      return storage.ref(ref).putFile(file);
+    } on FirebaseException catch (e) {
+      throw Exception('Erro no upload: ${e.code}');
+    }
+  }
+
+  pickAndUploadImage() async {
+    XFile? file = await getImage();
+    if (file != null) {
+      UploadTask task = await upload(file.path);
+      task.snapshotEvents.listen((TaskSnapshot snapshot) async {
+        if (snapshot.state == TaskState.running) {
+          setState(() {
+            uploading = true;
+            total = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          });
+        } else if (snapshot.state == TaskState.success) {
+          arquivos.add(await snapshot.ref.getDownloadURL());
+          refs.add(snapshot.ref);
+          setState(() => uploading = false);
+        }
+      });
+    }
+  }
+
+  deleteImage(int index) async {
+    await storage.ref(refs[index].fullPath).delete();
+    arquivos.removeAt(index);
+    refs.removeAt(index);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.deepPurpleAccent,
-        automaticallyImplyLeading: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          color: Colors.black38,
-          onPressed: () => Navigator.pop(context, false),
-        ),
-        title: Center(
-          child: SizedBox(
-
-            child: Text('Criando Anuncio'),
-          ),
-        ),
-      ),
-      body: Container(
-        padding: EdgeInsets.only(top: 60, left: 40, right: 40),
-        color: Colors.white,
-        child: ListView(
-          children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        "Criando Anuncio",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        "Por favor, informe os seus dados, e dados dos pets, e também imagem do(s) pet(s):",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        textAlign: TextAlign.center,
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: Column(
-                    children: <Widget>[
-
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: "Tipo Animal",
-                          labelStyle: TextStyle(
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: "Raças",
-                          labelStyle: TextStyle(
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                        style: TextStyle(fontSize: 20),
-                      ),
-
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: "Data Nascimento Pet",
-                          labelStyle: TextStyle(
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: "E-mail",
-                          labelStyle: TextStyle(
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: "Telefone",
-                          labelStyle: TextStyle(
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          labelText: "Descrição",
-                          labelStyle: TextStyle(
-                            color: Colors.black38,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      SizedBox(
+        appBar: AppBar(
+          title: uploading
+              ? Text('${total.round()}% Publicando')
+              : const Text('Criando Anuncio'),
+          actions: [
+            uploading
+                ? const Padding(
+                    padding: EdgeInsets.only(right: 12.0),
+                    child: Center(
+                      child: SizedBox(
+                        width: 20,
                         height: 20,
-                      ),
-                      Container(
-                        height: 60,
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: [0.3, 1],
-                            colors: [
-                              Color(0xFFF58524),
-                              Color(0XFFF92B7F),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5),
-                          ),
-                        ),
-                        child: SizedBox.expand(
-                          child: FlatButton(
-                            child: Text(
-                              "Enviar",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HomePage()),
-                              );
-                            },
-                          ),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 3,
+                          color: Colors.white,
                         ),
                       ),
-                    ],
-                  ),
-                )
-              ],
-            )
+                    ),
+                  )
+                : IconButton(
+                    icon: const Icon(Icons.upload),
+                    onPressed: pickAndUploadImage,
+                  )
           ],
+          elevation: 0,
         ),
-      ),
-    );
+        body: loading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : Padding(
+                padding: const EdgeInsets.all(24),
+                child: arquivos.isEmpty
+                    ? const Center(
+                        child: Text('Não há imagens ainda. '),
+                      )
+                    : ListView.builder(
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            leading: SizedBox(
+                              width: 60,
+                              height: 40,
+                              child: Image.network(
+                                arquivos[index],
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            title: Text(refs[index].fullPath),
+                            trailing: IconButton(
+                              icon: Icon(Icons.delete),
+                              onPressed: () => deleteImage(index),
+                            ),
+                          );
+                        },
+                        itemCount: arquivos.length,
+                      ),
+              ));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:extended_masked_text/extended_masked_text.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -219,6 +220,7 @@ class _SignupPageState extends State<SignupPage> {
                   ),
                   onPressed: () {
                     cadastrar();
+                    salvarFirestore();
                   },
                 ),
               ),
@@ -238,8 +240,22 @@ class _SignupPageState extends State<SignupPage> {
   final _tecTelefone = TextEditingController(); //
   final _firebaseAuth = FirebaseAuth.instance;
   final db = FirebaseFirestore.instance;
+  
+  salvarFirestore()async{
+    await Firebase.initializeApp();
+    var collection = FirebaseFirestore.instance.collection('contas');
+    collection.doc().set({
+      'nome':_tecNome.text,
+      'cpf':_tecCPF.text,
+      'email':_tecEmail.text,
+      'senha':_tecSenha.text,
+      'telefone':_tecTelefone.text
 
 
+    }).then((value) => print('Registrado')).catchError((error)=>print('deu errado$error'));
+
+  }
+  
   
   cadastrar() async {
     try {

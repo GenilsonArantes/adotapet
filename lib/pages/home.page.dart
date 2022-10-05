@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:projeto/controle/checagem_page.dart';
 import 'package:projeto/configuracoes/accoutConfigs.dart';
 import 'package:projeto/pages/createanuncio.dart';
+import 'package:projeto/pages/criaranuncio.dart';
 import 'package:projeto/pages/favoritos.dart';
 import 'package:projeto/pages/meusPets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -67,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => CreateAnuncioPage()),
+                        builder: (context) => CreateAnuncio()),
                   );
                 }),
             ListTile(
@@ -214,7 +215,7 @@ Widget  cardItem() {
           child: Text(
             "Pets Para a Adoção:\n"
             "Raças: Pug, Vira Lata, Pastor Alemão, Pincher\n"
-            "Meios De Contatos: \nEmail: mimosa@gmail.com \nTelefone: (37)99999-9999\nEndereço: Rua Fulano de Tal",
+            "Meios De Contatos: \nEmail: mimosa@gmail.com \nTelefone: (37)99999-9999\nEndereço: Rua Fulano de Tal\nDescrição: Todos são mancinhos, não fazem bagunça",
             textAlign: TextAlign.left,
           ),
         ),
